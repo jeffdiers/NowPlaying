@@ -7,9 +7,13 @@ $ npm install -g react-native-cli
 ```
 ### Xcode
 Make sure Xcode is installed 
+Make sure Xcode is installed https://developer.apple.com/xcode/downloads/
+<br />
+Install the Xcode Command Line Tools:
 <br />
 Xcode -> Preferences... -> Locations -> Command Line Tools: Xcode 8.2.1 (8C1002)
 ```
+$ cd NowPlaying
 $ react-native run-ios
 ```
 ### Android
@@ -18,6 +22,7 @@ Follow these guides to install Android SDK
 https://facebook.github.io/react-native/releases/0.23/docs/android-setup.html <br />
 https://facebook.github.io/react-native/docs/getting-started.html
 ```
+$ cd NowPlaying
 $ react-native run-android
 ```
 

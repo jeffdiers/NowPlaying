@@ -14,7 +14,7 @@ export default class HomeScreen extends Component {
   static navigationOptions = {
     title: 'Welcome',
     headerStyle: { backgroundColor: 'black' },
-    headerTintColor: 'teal'
+    headerTintColor: 'white',
   }
 
   render() {

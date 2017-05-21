@@ -5,11 +5,14 @@ import {
   Text,
   View,
   Button,
-  StatusBar
+  StatusBar,
+  Dimensions,
+  Image
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
-import styles from '../styles/GlobalStyle'
+import { styles, sliderWidth, itemWidth } from '../styles/GlobalStyle'
 import Frisbee from 'frisbee'
+import Carousel from 'react-native-snap-carousel'
 
 const api = new Frisbee({
     baseURI: "https://api.themoviedb.org/3/movie/now_playing?api_key=8da455281906a386fa15ac3854f3e4fc&language=en-US&page=1",
@@ -22,18 +25,19 @@ const api = new Frisbee({
 export default class ListView extends Component {
   static navigationOptions = {
     title: 'Now Playing',
-    headerStyle: { backgroundColor: 'black' },
-    headerTintColor: 'white'
+    // headerStyle: { backgroundColor: 'white' },
+    // headerTintColor: 'black'
   }
 
   constructor(props) {
       super(props) 
       this.state = {
           loading: true,
+          movies: {}
       }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this._loadMoviesNowPlaying()
   }
 
@@ -58,16 +62,27 @@ export default class ListView extends Component {
   }
 
   render() {
+    const posters = this.state.loading ? <View /> : this.state.movies.map((movie, index) => {
+        return (
+            <View key={index} style={styles.container}>
+                <View  style={styles.slide}>
+                    <Image 
+                        style={ styles.poster }
+                        source={{uri: 'https://image.tmdb.org/t/p/w500/' + movie.poster_path + ''}}
+                        />
+                </View>
+            </View>
+        )
+    })
+
     return this.state.loading ? <Text>Loading</Text> :
-    (<View style={styles.container}>
-        <StatusBar
-          barStyle="light-content"
-        />
-        <Text style={styles.welcome}>
-          List of movies playing now.
-          {this.state.movies[0].title}
-        </Text>
-      </View>
+    (
+        <Carousel
+            sliderWidth={sliderWidth}
+            itemWidth={itemWidth}
+        >
+            { posters }
+        </Carousel>
     )
-  }
+    }
 }

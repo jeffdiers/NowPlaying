@@ -58,8 +58,15 @@ const styles = StyleSheet.create({
   },
   posterDetail: {
     flex: 1,
-    marginLeft: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginTop: Dimensions.get('window').height * .6
+  },
+  flipButton: {
+    fontSize: 24,
+    textAlign: 'center',
+    margin: 10,
+    color: BrandColor
   },
   flipSide: {
     width: itemWidth,

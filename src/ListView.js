@@ -20,6 +20,7 @@ import StarRating from 'react-native-star-rating'
 import TimeAgo from 'react-native-timeago'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import FlipCard from 'react-native-flip-card'
+import MoviePoster from './MoviePoster.js'
 
 const api_key = '8da455281906a386fa15ac3854f3e4fc'
 
@@ -43,13 +44,14 @@ export default class ListView extends Component {
       super(props) 
       this.state = {
           loading: true,
-          fade: new Animated.Value(0),
-          flip: false,
+          flipIndex: null,
+          isFlipped: false,
           movies: {}
       }
   }
 
   componentDidMount() {
+    console.log('did mount')
     this._loadMoviesNowPlaying()
   }
 
@@ -63,16 +65,10 @@ export default class ListView extends Component {
 
         this.setState({
             loading: false,
+            isFlipped: false,
             movies: res.body.results
         })
 
-        Animated.timing(
-            this.state.fade,
-            {
-                toValue: 1,
-                duration: 1000,
-            },
-        ).start()
 
     } catch (err) {
         this.setState({loading: false})
@@ -90,7 +86,7 @@ export default class ListView extends Component {
 
         console.log(res.body.tagline)
         this.setState({
-            movieTagline: res.body.tagline
+            movieTagline: res.body.tagline,
         })
 
     } catch (err) {
@@ -102,8 +98,9 @@ export default class ListView extends Component {
   render() {
     const { navigate } = this.props.navigation
     const posters = this.state.loading ? <View /> : this.state.movies.map((movie, index) => {
+        console.log("poster pre render " + this.state.flipIndex)
         return (
-            <Animated.View key={index} style={[styles.container, {opacity: this.state.fade}]}>
+            <View key={index} style={[styles.container, {opacity: this.state.fade}]}>
                 <View>
                     <View  style={styles.slide}>
                         <FlipCard
@@ -112,25 +109,19 @@ export default class ListView extends Component {
                             perspective={2000}
                             flipHorizontal={true}
                             flipVertical={false}
-                            flip={this.state.flip}
-                            clickable={true}>
+                            flip={ this.state.flipIndex === index ? this.state.isFlipped : false}
+                            clickable={false}
+                            onFlipped={(isFlipped)=>{
+                                console.log('isFlipped ', this.state.flipIndex, this.state.isFlipped)
+                                }}>
                         <Image 
                             style={ styles.poster }
-                            source={{uri: 'https://image.tmdb.org/t/p/w500/' + movie.poster_path + ''}}
+                            source={{ uri: 'https://image.tmdb.org/t/p/w500/' + movie.poster_path + '' }}
                             />
-                        <View style={ styles.flipSide }>
-                            <Image 
-                                style={ styles.backdrop }
-                                source={{uri: 'https://image.tmdb.org/t/p/w1000/' + movie.backdrop_path + ''}}
-                                />
-                            <Text style={ styles.title }>{ movie.title }</Text>
-                            <Text style={ styles.subtitle }>Overview</Text>
-                            <Text style={ styles.overview }>{ movie.overview }</Text>
-                            <Text>{this.state.movieTagline}</Text>
-                        </View>
+                        <MoviePoster movie={movie} />
                         </FlipCard>
-                        <View style={styles.posterDetail}>
-                            <View style={styles.ratingContainer}>
+                        <View style={ styles.posterDetail }>
+                            <View style={ styles.ratingContainer }>
                                 <StarRating
                                     stlye={{width: 50}}
                                     disabled={false}
@@ -143,15 +134,28 @@ export default class ListView extends Component {
                                     starColor={BrandColor}
                                     disabled={true}
                                 />
-                                <Text style={{color: BrandColor}}>
-                                    Realeased <TimeAgo time={movie.release_date} />
+                                <Text style={{ color: BrandColor }}>
+                                    Realeased <TimeAgo time={ movie.release_date } />
                                 </Text>
                             </View>
+                            <TouchableOpacity onPress={() => {
+                                console.log('onPress ', this.state.flipIndex)
+                                this.setState({ 
+                                        flipIndex: index,
+                                        isFlipped: this.state.isFlipped ? false : true, 
+                                    })
+                                }}>
+                                <Text style={styles.flipButton}>
+                                    Flip
+                                </Text>
+                            </TouchableOpacity>
+                            
                         </View>
                     </View>
                 </View>
-            </Animated.View>
+            </View>
         )
+
     })
 
     return this.state.loading ? (
@@ -170,27 +174,67 @@ export default class ListView extends Component {
            <StatusBar
                 barStyle="light-content"
             />
-        <Carousel
-            sliderWidth={sliderWidth}
-            itemWidth={itemWidth}
-        >
-            { posters }
-            <View style={styles.container}>
-                <TouchableOpacity>
-                    <View  style={styles.slide}>
-                        <View style={ styles.loadMore }>
-                        </View>
-                        <View style={styles.ratingContainer}>
-                            <Text>
-                                Load More
-                            </Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            </View>
-
-        </Carousel>
+            <Carousel
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                swipeThreshold={20}
+                inactiveSlideOpacity={.8}
+                inactiveSlideScale={.9}
+                decelerationRate={'normal'}
+                onSnapToItem={(slideIndex) => {this.setState({isFlipped: false})}}>
+                { posters }
+            </Carousel>
         </Image>
     )
     }
 }
+
+
+            /*<View key={index} style={[styles.container, {opacity: this.state.fade}]}>
+                <View>
+                    <View  style={styles.slide}>
+                        <FlipCard
+                            style={{borderRadius: 4, borderWidth: 0}}
+                            friction={12}
+                            perspective={2000}
+                            flipHorizontal={true}
+                            flipVertical={false}
+                            flip={false}
+                            clickable={true}>
+                        <Image 
+                            style={ styles.poster }
+                            source={{ uri: 'https://image.tmdb.org/t/p/w500/' + movie.poster_path + '' }}
+                            />
+                        <View style={ styles.flipSide }>
+                            <Image 
+                                style={ styles.backdrop }
+                                source={{ uri: 'https://image.tmdb.org/t/p/w1000/' + movie.backdrop_path + '' }}
+                                />
+                            <Text style={ styles.title }>{ movie.title }</Text>
+                            <Text style={ styles.subtitle }>Overview</Text>
+                            <Text style={ styles.overview }>{ movie.overview }</Text>
+                        </View>
+                        </FlipCard>
+                        <View style={ styles.posterDetail }>
+                            <View style={ styles.ratingContainer }>
+                                <StarRating
+                                    stlye={{width: 50}}
+                                    disabled={false}
+                                    emptyStar={'ios-star-outline'}
+                                    fullStar={'ios-star'}
+                                    halfStar={'ios-star-half'}
+                                    iconSet={'Ionicons'}
+                                    maxStars={5}
+                                    rating={movie.vote_average / 2}
+                                    starColor={BrandColor}
+                                    disabled={true}
+                                />
+                                <Text style={{ color: BrandColor }}>
+                                    Realeased <TimeAgo time={ movie.release_date } />
+                                </Text>
+                            </View>
+                            
+                        </View>
+                    </View>
+                </View>
+            </View>*/

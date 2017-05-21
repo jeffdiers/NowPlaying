@@ -13,6 +13,8 @@ import { StackNavigator } from 'react-navigation'
 import { styles, sliderWidth, itemWidth } from '../styles/GlobalStyle'
 import Frisbee from 'frisbee'
 import Carousel from 'react-native-snap-carousel'
+import StarRating from 'react-native-star-rating'
+import TimeAgo from 'react-native-timeago'
 
 const api = new Frisbee({
     baseURI: "https://api.themoviedb.org/3/movie/now_playing?api_key=8da455281906a386fa15ac3854f3e4fc&language=en-US&page=1",
@@ -70,6 +72,22 @@ export default class ListView extends Component {
                         style={ styles.poster }
                         source={{uri: 'https://image.tmdb.org/t/p/w500/' + movie.poster_path + ''}}
                         />
+                    <View style={styles.ratingContainer}>
+                        <StarRating
+                            stlye={{width: 50}}
+                            disabled={false}
+                            emptyStar={'ios-star-outline'}
+                            fullStar={'ios-star'}
+                            halfStar={'ios-star-half'}
+                            iconSet={'Ionicons'}
+                            maxStars={5}
+                            rating={movie.vote_average / 2}
+                            starColor={'black'}
+                        />
+                        <Text>
+                            Realeased <TimeAgo time={movie.release_date} />
+                        </Text>
+                    </View>
                 </View>
             </View>
         )

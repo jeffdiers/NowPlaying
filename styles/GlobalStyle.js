@@ -29,12 +29,14 @@ const styles = StyleSheet.create({
   slide: {
     width: itemWidth,
     height: itemHeight + 90,
-    backgroundColor: 'red',
   },
   poster: {
     width: itemWidth,
     height: itemHeight,
-    marginBottom: 90
+    marginBottom: 9
+  },
+  ratingContainer: {
+    width: 200
   }
 })
 

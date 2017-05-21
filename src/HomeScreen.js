@@ -14,6 +14,7 @@ import { styles } from '../styles/GlobalStyle'
 export default class HomeScreen extends Component {
   static navigationOptions = {
     title: 'Welcome',
+    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0 },
     // headerStyle: { backgroundColor: 'black' },
     // headerTintColor: 'white',
   }

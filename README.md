@@ -28,7 +28,11 @@ Xcode -> Preferences... -> Locations -> Command Line Tools: Xcode 8.2.1 (8C1002)
 $ git clone
 $ cd NowPlaying
 $ npm install
-$ react-native run-ios
+$ react-native run-ios 
+```
+for a better expirence Build for release
+```
+$ react-native run-ios --configuration Release
 ```
 ### Android
 Follow these guides to install Android SDK (this also takes awhile)
@@ -40,4 +44,8 @@ $ git clone
 $ cd NowPlaying
 $ npm install
 $ react-native run-android
+```
+for a better expirence Build for release
+```
+$ react-native run-android --variant=release
 ```

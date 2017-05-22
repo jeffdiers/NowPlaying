@@ -4,6 +4,8 @@ import {
 } from 'react-native'
 
 const BrandColor = '#48BF84'
+const BrandColorDark = '#171D1C'
+const BrandColorContrast = '#5863F8'
 
 const horizontalMargin = 20;
 const slideWidth = Dimensions.get('window').width - 100;
@@ -17,7 +19,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent'
-  },  
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  containerWelcome: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: BrandColorDark
+  },
+  welcomeTitle: {
+    fontSize: 30,
+    color: BrandColor,
+    marginTop: 6
+  },
+  welcomeText: {
+    fontSize: 18,
+    color: BrandColor,
+    textAlign: 'center',
+    margin: 10
+  },
+  welcomeButton: {
+    borderRadius: 6,
+    borderWidth: 2,
+    marginTop: 30,
+    borderColor: BrandColor,
+  },
+  welcomeButtonText: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    color: BrandColor,
+    fontSize: 18
+  },
   containerBlur: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -157,4 +194,4 @@ const styles = StyleSheet.create({
   },
 })
 
-module.exports = { styles, sliderWidth, itemWidth, BrandColor }
+module.exports = { styles, sliderWidth, itemWidth, BrandColor, BrandColorDark, BrandColorContrast }

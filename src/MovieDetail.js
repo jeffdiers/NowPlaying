@@ -50,7 +50,7 @@ export default class HomeScreen extends Component {
           style={styles.absolute}
           viewRef={this.state.viewRef}
           blurType="dark"
-          blurAmount={10}
+          blurAmount={8}
         />
         <View style={{backgroundColor: 'transparent'}}>
             <ScrollView

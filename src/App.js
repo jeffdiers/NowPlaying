@@ -16,7 +16,7 @@ import MovieDetail from './MovieDetail'
 const NowPlaying = StackNavigator({
   Home: { screen: HomeScreen },
   List: { screen: ListView },
-  Detail: { screen: MovieDetail}
+  Detail: { screen: MovieDetail }
 })
 
 module.exports = NowPlaying

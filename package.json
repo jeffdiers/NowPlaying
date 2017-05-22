@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "frisbee": "^1.4.0",
+    "numeral": "^2.0.6",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-flip-card": "^3.4.0",

@@ -20,7 +20,7 @@ import StarRating from 'react-native-star-rating'
 import TimeAgo from 'react-native-timeago'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import FlipCard from 'react-native-flip-card'
-import MoviePoster from './MoviePoster.js'
+import MoviePosterBack from './MoviePosterBack.js'
 
 const api_key = '8da455281906a386fa15ac3854f3e4fc'
 
@@ -35,8 +35,7 @@ const api = new Frisbee({
 export default class ListView extends Component {
   static navigationOptions = {
     title: 'Now Playing',
-    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0 },
-    // headerStyle: { backgroundColor: 'white' },
+    headerStyle:{ position: 'absolute', borderBottomColor: BrandColor, borderBottomWidth: .25, backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0 },
     headerTintColor: BrandColor
   }
 
@@ -51,7 +50,6 @@ export default class ListView extends Component {
   }
 
   componentDidMount() {
-    console.log('did mount')
     this._loadMoviesNowPlaying()
   }
 
@@ -76,35 +74,15 @@ export default class ListView extends Component {
     }
   }
 
-  _renderMovieGenre = async (movie_id) => {
-    try {  
-        const res = await api.get('/' + movie_id + '?api_key=' + api_key + '&language=en-US',{
-            body: {}
-        })
-
-        if (res.err) throw res.err
-
-        console.log(res.body.tagline)
-        this.setState({
-            movieTagline: res.body.tagline,
-        })
-
-    } catch (err) {
-        this.setState({loading: false})
-        console.log(err)
-    }
-  }
-
   render() {
     const { navigate } = this.props.navigation
     const posters = this.state.loading ? <View /> : this.state.movies.map((movie, index) => {
-        console.log("poster pre render " + this.state.flipIndex)
         return (
-            <View key={index} style={[styles.container, {opacity: this.state.fade}]}>
+            <View key={index} style={styles.container}>
                 <View>
                     <View  style={styles.slide}>
                         <FlipCard
-                            style={{borderRadius: 4, borderWidth: 0}}
+                            style={{borderRadius: 4, borderWidth: 0, position: 'absolute'}}
                             friction={12}
                             perspective={2000}
                             flipHorizontal={true}
@@ -118,7 +96,7 @@ export default class ListView extends Component {
                             style={ styles.poster }
                             source={{ uri: 'https://image.tmdb.org/t/p/w500/' + movie.poster_path + '' }}
                             />
-                        <MoviePoster movie={movie} />
+                        <MoviePosterBack  navigation={ this.props.navigation } movie={ movie } />
                         </FlipCard>
                         <View style={ styles.posterDetail }>
                             <View style={ styles.ratingContainer }>
@@ -139,7 +117,6 @@ export default class ListView extends Component {
                                 </Text>
                             </View>
                             <TouchableOpacity onPress={() => {
-                                console.log('onPress ', this.state.flipIndex)
                                 this.setState({ 
                                         flipIndex: index,
                                         isFlipped: this.state.isFlipped ? false : true, 
@@ -149,7 +126,6 @@ export default class ListView extends Component {
                                     Flip
                                 </Text>
                             </TouchableOpacity>
-                            
                         </View>
                     </View>
                 </View>
@@ -182,59 +158,11 @@ export default class ListView extends Component {
                 inactiveSlideScale={.9}
                 decelerationRate={'normal'}
                 onSnapToItem={(slideIndex) => {this.setState({isFlipped: false})}}>
+
                 { posters }
+                
             </Carousel>
         </Image>
     )
     }
 }
-
-
-            /*<View key={index} style={[styles.container, {opacity: this.state.fade}]}>
-                <View>
-                    <View  style={styles.slide}>
-                        <FlipCard
-                            style={{borderRadius: 4, borderWidth: 0}}
-                            friction={12}
-                            perspective={2000}
-                            flipHorizontal={true}
-                            flipVertical={false}
-                            flip={false}
-                            clickable={true}>
-                        <Image 
-                            style={ styles.poster }
-                            source={{ uri: 'https://image.tmdb.org/t/p/w500/' + movie.poster_path + '' }}
-                            />
-                        <View style={ styles.flipSide }>
-                            <Image 
-                                style={ styles.backdrop }
-                                source={{ uri: 'https://image.tmdb.org/t/p/w1000/' + movie.backdrop_path + '' }}
-                                />
-                            <Text style={ styles.title }>{ movie.title }</Text>
-                            <Text style={ styles.subtitle }>Overview</Text>
-                            <Text style={ styles.overview }>{ movie.overview }</Text>
-                        </View>
-                        </FlipCard>
-                        <View style={ styles.posterDetail }>
-                            <View style={ styles.ratingContainer }>
-                                <StarRating
-                                    stlye={{width: 50}}
-                                    disabled={false}
-                                    emptyStar={'ios-star-outline'}
-                                    fullStar={'ios-star'}
-                                    halfStar={'ios-star-half'}
-                                    iconSet={'Ionicons'}
-                                    maxStars={5}
-                                    rating={movie.vote_average / 2}
-                                    starColor={BrandColor}
-                                    disabled={true}
-                                />
-                                <Text style={{ color: BrandColor }}>
-                                    Realeased <TimeAgo time={ movie.release_date } />
-                                </Text>
-                            </View>
-                            
-                        </View>
-                    </View>
-                </View>
-            </View>*/

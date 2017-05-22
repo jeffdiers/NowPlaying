@@ -23,17 +23,10 @@ export default class HomeScreen extends Component {
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to NowPlaying
-        </Text>
         <Button
           onPress={() => navigate('List')}
-          title="View movies"
+          title="View movies now playing"
         />
-        <Image 
-            style={{width: 300, height: 300}}
-            source={{uri: 'https://image.tmdb.org/t/p/w500//y4MBh0EjBlMuOzv9axM4qJlmhzz.jpg'}}
-            />
       </View>
     )
   }

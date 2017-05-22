@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
   slide: {
     width: itemWidth,
     height: itemHeight + 90,
-    marginTop: Dimensions.get('window').height * .12
+    marginTop: Dimensions.get('window').height * .12,
   },
   poster: {
     width: itemWidth,
     height: itemHeight,
     marginBottom: 9,
-    borderRadius: 4
+    borderRadius: 4,
   },
   loadMore: {
     width: itemWidth,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: Dimensions.get('window').height * .6
+    marginTop: itemHeight + 10
   },
   flipButton: {
     fontSize: 24,
@@ -78,12 +78,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     textAlign: 'left',
-    margin: 10,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
   },
   subtitle: {
     fontSize: 18,
     textAlign: 'left',
     marginLeft: 10,
+    marginTop: 10
   },
   overview: {
     fontSize: 12,
@@ -93,9 +96,53 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     width: itemWidth,
-    height: 150,
+    height: itemHeight * .30,
     borderRadius: 4
-  }
+  },
+  tagline: {
+    fontStyle: 'italic',
+    fontSize: 12,
+    textAlign: 'left',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  moreInfoButton: {
+    marginTop: 5
+  },
+  movieDetailBackdrop: {
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width
+  },
+  movieDetailContainer: {
+    flex: 1,
+    backgroundColor: 'black',
+    opacity: .8,
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width
+  },
+  movieDetailTitle: {
+    fontSize: 25,
+    textAlign: 'left',
+    margin: 10,
+    marginTop: 100,
+    color: BrandColor,
+    opacity: 1 
+  },
+  movieDetailSubtitle: {
+    fontSize: 25,
+    textAlign: 'left',
+    margin: 10,
+    marginBottom: 0,
+    color: BrandColor,
+    opacity: 1 
+  },
+  movieDetailGenre: {
+    fontSize: 18,
+    textAlign: 'left',
+    marginLeft: 10,
+    color: BrandColor,
+    opacity: 1 
+  },
 })
 
 module.exports = { styles, sliderWidth, itemWidth, BrandColor }

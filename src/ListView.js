@@ -10,7 +10,8 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
-  Animated
+  Animated,
+  ScrollView
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { styles, sliderWidth, itemWidth, BrandColor } from '../styles/GlobalStyle'
@@ -88,7 +89,7 @@ export default class ListView extends Component {
                             flipHorizontal={true}
                             flipVertical={false}
                             flip={ this.state.flipIndex === index ? this.state.isFlipped : false}
-                            clickable={false}
+                            clickable={true}
                             onFlipped={(isFlipped)=>{
                                 console.log('isFlipped ', this.state.flipIndex, this.state.isFlipped)
                                 }}>
@@ -122,9 +123,7 @@ export default class ListView extends Component {
                                         isFlipped: this.state.isFlipped ? false : true, 
                                     })
                                 }}>
-                                <Text style={styles.flipButton}>
-                                    Flip
-                                </Text>
+                                <Ionicon style={styles.infoCircle} name="ios-information-circle-outline" size={35} color={BrandColor} />
                             </TouchableOpacity>
                         </View>
                     </View>

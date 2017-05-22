@@ -68,22 +68,14 @@ export default class MoviePosterBack extends Component {
 
     render () {
         const { navigate } = this.props.navigation
-        return this.state.loading ? <View /> : (
+        return this.state.loading ? <View style={ styles.flipSide } /> : (
                 <View style={ styles.flipSide }>
-                    <ScrollView
-                        ref={(scrollView) => { _scrollView = scrollView; }}
-                        automaticallyAdjustContentInsets={false}
-                        onScroll={() => { console.log('onScroll!'); }}
-                        scrollEventThrottle={200}
-                        style={styles.scrollView}>
                         <Image 
                             style={ styles.backdrop }
                             source={{ uri: 'https://image.tmdb.org/t/p/w1000/' + this.props.movie.backdrop_path + '' }}
                             />
                             <Text style={ styles.title }>{ this.props.movie.title }</Text>
                             <Text style={ styles.tagline }>{ this.state.movieInfo.tagline }</Text>
-                            <Text style={ styles.subtitle }>Overview</Text>
-                            <Text style={ styles.overview }>{ this.props.movie.overview }</Text>
                             <Text style={ styles.subtitle }>Cast</Text>
                             <Text style={ styles.overview }>{ this.state.movieCredits.cast[0].character }: { this.state.movieCredits.cast[0].name }</Text>
                             <Text style={ styles.overview }>{ this.state.movieCredits.cast[1].character }: { this.state.movieCredits.cast[1].name }</Text>
@@ -98,7 +90,6 @@ export default class MoviePosterBack extends Component {
                                     title="More info"
                                     />
                             </View>
-                    </ScrollView>
                 </View>
         )
     }

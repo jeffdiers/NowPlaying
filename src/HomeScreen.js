@@ -25,7 +25,7 @@ export default class HomeScreen extends Component {
     return (
       <View style={styles.containerWelcome}>
         <StatusBar
-            hidden={true}
+            barStyle="light-content"
         />
         <View style={styles.logoContainer}>
             <Ionicon style={{marginRight: 10}} name="ios-videocam-outline" size={50} color={BrandColor} />

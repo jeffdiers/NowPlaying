@@ -3,8 +3,6 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
-  ScrollView,
   Button
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
@@ -68,28 +66,47 @@ export default class MoviePosterBack extends Component {
 
     render () {
         const { navigate } = this.props.navigation
+        const cast = this.state.loading ? <View /> : this.state.movieCredits.cast.slice(0, 3).map((person, index) => {
+            return (
+                <Text style={ styles.overview }>
+                    { person.character }: { person.name }
+                </Text>
+            )
+        })
+        const crew = this.state.loading ? <View /> : this.state.movieCredits.crew.slice(0, 3).map((person, index) => {
+            return (
+                <Text style={ styles.overview }>
+                    { person.department }: { person.name }
+                </Text>
+            )
+        })
+
         return this.state.loading ? <View style={ styles.flipSide } /> : (
                 <View style={ styles.flipSide }>
-                    <Image 
-                        style={ styles.backdrop }
-                        source={{ uri: 'https://image.tmdb.org/t/p/w1000/' + this.props.movie.backdrop_path + '' }}
-                        />
-                        <Text style={ styles.title }>{ this.props.movie.title }</Text>
-                        <Text style={ styles.tagline }>{ this.state.movieInfo.tagline }</Text>
-                        <Text style={ styles.subtitle }>Cast</Text>
-                        <Text style={ styles.overview }>{ this.state.movieCredits.cast[0].character }: { this.state.movieCredits.cast[0].name }</Text>
-                        <Text style={ styles.overview }>{ this.state.movieCredits.cast[1].character }: { this.state.movieCredits.cast[1].name }</Text>
-                        <Text style={ styles.overview }>{ this.state.movieCredits.cast[2].character }: { this.state.movieCredits.cast[2].name }</Text>
-                        <Text style={ styles.subtitle }>Crew</Text>
-                        <Text style={ styles.overview }>{ this.state.movieCredits.crew[0].department }: { this.state.movieCredits.crew[0].name }</Text>
-                        <Text style={ styles.overview }>{ this.state.movieCredits.crew[1].department }: { this.state.movieCredits.crew[1].name }</Text>
-                        <Text style={ styles.overview }>{ this.state.movieCredits.crew[2].department }: { this.state.movieCredits.crew[2].name }</Text>
-                        <View style={styles.moreInfoButton}>
-                            <Button
-                                onPress={() => navigate('Detail', { movieInfo: this.state.movieInfo })}
-                                title="More info"
-                                />
+                    <View>
+                        <Image 
+                            style={ styles.backdrop }
+                            source={{ uri: 'https://image.tmdb.org/t/p/w1000/' + this.props.movie.backdrop_path + '' }}
+                            />
+                        <View style={ styles.moviePosterBackCover }>
+                            <Text style={ styles.title }>{ this.props.movie.title }</Text>
+                            <Text style={ styles.tagline }>{ this.state.movieInfo.tagline }</Text>
+                            <Text style={ styles.subtitle }>
+                                Cast
+                            </Text>
+                                { cast }
+                            <Text style={ styles.subtitle }>
+                                Crew
+                            </Text>
+                                { crew }
                         </View>
+                    </View>
+                    <View style={styles.moreInfoButton}>
+                        <Button
+                            onPress={() => navigate('Detail', { movieInfo: this.state.movieInfo })}
+                            title="More info"
+                            />
+                    </View>
                 </View>
         )
     }

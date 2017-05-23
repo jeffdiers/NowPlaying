@@ -1,10 +1,8 @@
-import {
-  StyleSheet,
-  Dimensions
-} from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 
 const BrandColor = '#48BF84'
 const BrandColorDark = '#171D1C'
+const BrandColorLight = '#EFE9F4'
 
 const horizontalMargin = 20;
 const slideWidth = Dimensions.get('window').width - 100;
@@ -115,8 +113,14 @@ const styles = StyleSheet.create({
     width: itemWidth,
     height: itemHeight,
     marginBottom: 9,
-    backgroundColor: '#EFE9F4',
-    borderRadius: 4
+    backgroundColor: BrandColorLight,
+    borderRadius: 4,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
+  moviePosterBackCover: {
+    top: -4,
+    backgroundColor: BrandColorLight
   },
   title: {
     fontSize: 22,
@@ -140,7 +144,7 @@ const styles = StyleSheet.create({
   backdrop: {
     width: itemWidth,
     height: itemHeight * .30,
-    borderRadius: 4
+    borderRadius: 4,
   },
   tagline: {
     fontStyle: 'italic',
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   moreInfoButton: {
-    marginTop: 5
+    marginBottom: 10
   },
   movieDetailBackdrop: {
     height: Dimensions.get('window').height,

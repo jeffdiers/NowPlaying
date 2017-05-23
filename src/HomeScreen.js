@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
   Text,
   View,
   Button,
@@ -10,7 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
-import { styles, BrandColor, BrandColorDark, BrandColorContrast } from '../styles/GlobalStyle'
+import { styles, BrandColor, BrandColorDark } from '../styles/GlobalStyle'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
 export default class HomeScreen extends Component {
@@ -38,7 +36,9 @@ export default class HomeScreen extends Component {
             Thank you for viewing my app!
         </Text>
         <TouchableOpacity onPress={() => navigate('List')} style={styles.welcomeButton}>  
-                    <Text style={styles.welcomeButtonText}>View Movies</Text>
+          <Text style={styles.welcomeButtonText}>
+            View Movies
+          </Text>
         </TouchableOpacity>
       </View>
     )

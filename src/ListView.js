@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
   Text,
   View,
-  Button,
   StatusBar,
-  Dimensions,
   Image,
   TouchableOpacity,
   ActivityIndicator,
-  Animated,
   ScrollView
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
@@ -64,11 +59,8 @@ export default class ListView extends Component {
 
         this.setState({
             loading: false,
-            isFlipped: false,
             movies: res.body.results
         })
-
-
     } catch (err) {
         this.setState({loading: false})
         console.log(err)
@@ -76,6 +68,7 @@ export default class ListView extends Component {
   }
 
   render() {
+
     const { navigate } = this.props.navigation
     const posters = this.state.loading ? <View /> : this.state.movies.map((movie, index) => {
         return (
@@ -97,7 +90,9 @@ export default class ListView extends Component {
                             style={ styles.poster }
                             source={{ uri: 'https://image.tmdb.org/t/p/w500/' + movie.poster_path + '' }}
                             />
+
                         <MoviePosterBack  navigation={ this.props.navigation } movie={ movie } />
+                        
                         </FlipCard>
                         <View style={ styles.posterDetail }>
                             <View style={ styles.ratingContainer }>
@@ -130,38 +125,37 @@ export default class ListView extends Component {
                 </View>
             </View>
         )
-
     })
 
     return this.state.loading ? (
-        <Image source={require('../assets/background.png')} style={styles.containerHome}>
+            <Image source={require('../assets/background.png')} style={styles.containerHome}>
+                <StatusBar
+                    barStyle="light-content"
+                />
+                <ActivityIndicator
+                    animating={this.state.animating}
+                    style={[styles.centering, {height: 80}]}
+                    size="large"
+                />
+            </Image>
+        ) : (
+            <Image source={require('../assets/background.png')} style={styles.containerHome}>
             <StatusBar
-                barStyle="light-content"
-            />
-            <ActivityIndicator
-                animating={this.state.animating}
-                style={[styles.centering, {height: 80}]}
-                size="large"
-            />
-        </Image>
-    ) : (
-        <Image source={require('../assets/background.png')} style={styles.containerHome}>
-           <StatusBar
-                barStyle="light-content"
-            />
-            <Carousel
-                sliderWidth={sliderWidth}
-                itemWidth={itemWidth}
-                swipeThreshold={20}
-                inactiveSlideOpacity={.8}
-                inactiveSlideScale={.9}
-                decelerationRate={'normal'}
-                onSnapToItem={(slideIndex) => {this.setState({isFlipped: false})}}>
+                    barStyle="light-content"
+                />
+                <Carousel
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth}
+                    swipeThreshold={20}
+                    inactiveSlideOpacity={.8}
+                    inactiveSlideScale={.9}
+                    decelerationRate={'normal'}
+                    onSnapToItem={(slideIndex) => {this.setState({isFlipped: false})}}>
 
-                { posters }
-                
-            </Carousel>
-        </Image>
-    )
+                    { posters }
+                    
+                </Carousel>
+            </Image>
+        )
     }
 }

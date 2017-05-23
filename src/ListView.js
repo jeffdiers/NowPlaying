@@ -135,14 +135,14 @@ export default class ListView extends Component {
 
     return this.state.loading ? (
         <Image source={require('../assets/background.png')} style={styles.containerHome}>
-        <StatusBar
-            barStyle="light-content"
-        />
-        <ActivityIndicator
-            animating={this.state.animating}
-            style={[styles.centering, {height: 80}]}
-            size="large"
-        />
+            <StatusBar
+                barStyle="light-content"
+            />
+            <ActivityIndicator
+                animating={this.state.animating}
+                style={[styles.centering, {height: 80}]}
+                size="large"
+            />
         </Image>
     ) : (
         <Image source={require('../assets/background.png')} style={styles.containerHome}>

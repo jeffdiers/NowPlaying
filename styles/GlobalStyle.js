@@ -5,7 +5,6 @@ import {
 
 const BrandColor = '#48BF84'
 const BrandColorDark = '#171D1C'
-const BrandColorContrast = '#5863F8'
 
 const horizontalMargin = 20;
 const slideWidth = Dimensions.get('window').width - 100;
@@ -194,4 +193,4 @@ const styles = StyleSheet.create({
   },
 })
 
-module.exports = { styles, sliderWidth, itemWidth, BrandColor, BrandColorDark, BrandColorContrast }
+module.exports = { styles, sliderWidth, itemWidth, BrandColor, BrandColorDark }

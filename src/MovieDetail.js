@@ -25,8 +25,8 @@ export default class HomeScreen extends Component {
   }
 
   constructor(props) {
-      super(props)
-      this.state = { viewRef: null };
+    super(props)
+    this.state = { viewRef: null };
   }
 
   imageLoaded() {
@@ -34,10 +34,11 @@ export default class HomeScreen extends Component {
   }
 
   render() {
+
     const { params } = this.props.navigation.state
     const genres = params.movieInfo.genres.map((genre, index) => { return <Text key={index} style={styles.movieDetail}>{genre.name}</Text> })
     const production_companies = params.movieInfo.production_companies.map((production_companies, index) => { return <Text key={index} style={styles.movieDetail}>{production_companies.name}</Text> })
-    console.log('scroll view ', params.movieInfo)
+
     return (
       <View style={styles.container}>
         <Image
@@ -106,53 +107,3 @@ export default class HomeScreen extends Component {
     )
   }
 }
-
-
-                    {/*<ScrollView
-                            ref={(scrollView) => { _scrollView = scrollView; }}
-                            automaticallyAdjustContentInsets={false}
-                            onScroll={() => { console.log('onScroll!'); }}
-                            scrollEventThrottle={200}
-                            style={styles.scrollView}>
-                        <Text style={styles.movieDetailTitle}>
-                            { params.movieInfo.title }
-                        </Text>
-                        <Text style={ styles.movieDetailSubtitle }>
-                            Overview
-                        </Text>
-                        <Text style={ styles.movieDetail }>
-                            { params.movieInfo.overview }
-                        </Text>
-                        <Text style={styles.movieDetail}>
-                            Genres
-                        </Text>
-                        { genres }
-                        <Text style={styles.movieDetail}>
-                            Production Companies
-                        </Text>
-                        { production_companies }
-                        <Text style={styles.movieDetail}>
-                            Budget
-                        </Text>
-                        <Text style={styles.movieDetail}>
-                            { params.movieInfo.budget > 0 ? numeral(params.movieInfo.budget).format('($ 0 a)') : 'N/A' }
-                        </Text>
-                        <Text style={styles.movieDetail}>
-                            Revenue
-                        </Text>  
-                        <Text style={styles.movieDetail}>
-                            { params.movieInfo.revenue > 0 ? numeral(params.movieInfo.revenue).format('($ 0 a)') : 'N/A' }
-                        </Text>  
-                        <Text style={styles.movieDetail}>
-                            Runtime
-                        </Text>
-                        <Text style={styles.movieDetail}>
-                            { params.movieInfo.runtime } minutes
-                        </Text>
-                        <Text style={styles.movieDetailSubtitle}>
-                            Status
-                        </Text>
-                        <Text style={styles.movieDetail}>
-                            { params.movieInfo.status }
-                        </Text>
-                    </ScrollView>*/}

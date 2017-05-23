@@ -16,8 +16,6 @@ import Ionicon from 'react-native-vector-icons/Ionicons'
 export default class HomeScreen extends Component {
   static navigationOptions = {
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0 },
-    // headerStyle: { backgroundColor: 'black' },
-    // headerTintColor: 'white',
   }
 
   render() {

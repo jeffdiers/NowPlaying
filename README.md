@@ -11,7 +11,7 @@ This take home exercise is a simple app build with React Native that shows movie
 5. Each cell in the ListView should be able to render a new view with all details of the movie once clicked, let’s call this new view MovieView. What you render inside this component is up to you, but it’s your chance to show us your skills. Display any data you choose of the given movie, and feel free to add visual styling and other cool things. 
 6. You may use any library or tool of you choosing as long as it is open source.
 
-## Setup Virtual Devices
+## Run on Virtual Devices
 You'll need to install react native's command line tools
 ```
 $ npm install -g react-native-cli

@@ -31,6 +31,7 @@ Install the Xcode Command Line Tools:
 <br/>
 Xcode -> Preferences... -> Locations -> Command Line Tools: Xcode 8.2.1 (8C1002)
 <br/>
+<br/>
 for debugging
 ```
 $ react-native run-ios 
@@ -44,6 +45,7 @@ Follow these guides to install Android SDK (this also takes awhile)
 <br/>
 https://facebook.github.io/react-native/releases/0.23/docs/android-setup.html <br />
 https://facebook.github.io/react-native/docs/getting-started.html
+<br/>
 <br/>
 for debugging
 ```

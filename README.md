@@ -16,11 +16,12 @@ You'll need to install react native's command line tools
 ```
 $ npm install -g react-native-cli
 ```
-Install dependencies
+Install dependencies and link assets
 ```
 $ git clone git@github.com:jeffdiers/NowPlaying.git
 $ cd NowPlaying
 $ npm install
+$ react-native link
 ```
 ### Xcode
 Install Xcode (this will take awhile):

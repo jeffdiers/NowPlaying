@@ -115,6 +115,10 @@ const styles = StyleSheet.create({
     marginBottom: 9,
     backgroundColor: BrandColorLight,
     borderRadius: 4,
+  },
+  flipSideContent: {
+    width: itemWidth,
+    height: itemHeight,
     flexDirection: 'column',
     justifyContent: 'space-between'
   },

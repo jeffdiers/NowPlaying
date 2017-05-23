@@ -3,7 +3,8 @@ import {
   Text,
   View,
   Image,
-  Button
+  Button,
+  Animated
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { styles, sliderWidth, itemWidth, BrandColor } from '../styles/GlobalStyle'
@@ -29,12 +30,21 @@ export default class MoviePosterBack extends Component {
         super(props)
         this.state = {
             movieInfo: {},
-            loading: true
+            loading: true,
+            fadeAnim: new Animated.Value(0), // opacity 0
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._renderMovieInfo(this.props.movie.id)
+
+          Animated.timing(       // Uses easing functions
+            this.state.fadeAnim, // The value to drive
+            {
+              toValue: 1,        // Target
+              duration: 1600,    // Configuration
+            },
+          ).start();             // Don't forget start!
     }
 
     _renderMovieInfo = async (movie_id) => {
@@ -68,45 +78,47 @@ export default class MoviePosterBack extends Component {
         const { navigate } = this.props.navigation
         const cast = this.state.loading ? <View /> : this.state.movieCredits.cast.slice(0, 3).map((person, index) => {
             return (
-                <Text style={ styles.overview }>
+                <Text key={index} style={ styles.overview }>
                     { person.character }: { person.name }
                 </Text>
             )
         })
         const crew = this.state.loading ? <View /> : this.state.movieCredits.crew.slice(0, 3).map((person, index) => {
             return (
-                <Text style={ styles.overview }>
+                <Text key={index} style={ styles.overview }>
                     { person.department }: { person.name }
                 </Text>
             )
         })
 
-        return this.state.loading ? <View style={ styles.flipSide } /> : (
+        return this.state.loading ? <View style={ styles.flipSide } />: (
                 <View style={ styles.flipSide }>
-                    <View>
-                        <Image 
-                            style={ styles.backdrop }
-                            source={{ uri: 'https://image.tmdb.org/t/p/w1000/' + this.props.movie.backdrop_path + '' }}
-                            />
-                        <View style={ styles.moviePosterBackCover }>
-                            <Text style={ styles.title }>{ this.props.movie.title }</Text>
-                            <Text style={ styles.tagline }>{ this.state.movieInfo.tagline }</Text>
-                            <Text style={ styles.subtitle }>
-                                Cast
-                            </Text>
-                                { cast }
-                            <Text style={ styles.subtitle }>
-                                Crew
-                            </Text>
-                                { crew }
+                    <Animated.View style={[ styles.flipSideContent, { opacity: this.state.fadeAnim } ]}>
+                        <View>
+                            <Image 
+                                style={ styles.backdrop }
+                                source={{ uri: 'https://image.tmdb.org/t/p/w1000/' + this.props.movie.backdrop_path + '' }}
+                                />
+                            <View style={ styles.moviePosterBackCover }>
+                                <Text style={ styles.title }>{ this.props.movie.title }</Text>
+                                <Text style={ styles.tagline }>{ this.state.movieInfo.tagline }</Text>
+                                <Text style={ styles.subtitle }>
+                                    Cast
+                                </Text>
+                                    { cast }
+                                <Text style={ styles.subtitle }>
+                                    Crew
+                                </Text>
+                                    { crew }
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.moreInfoButton}>
-                        <Button
-                            onPress={() => navigate('Detail', { movieInfo: this.state.movieInfo })}
-                            title="More info"
-                            />
-                    </View>
+                        <View style={styles.moreInfoButton}>
+                            <Button
+                                onPress={() => navigate('Detail', { movieInfo: this.state.movieInfo })}
+                                title="More info"
+                                />
+                        </View>
+                    </Animated.View>
                 </View>
         )
     }

@@ -25,12 +25,12 @@ Install the Xcode Command Line Tools:
 <br />
 Xcode -> Preferences... -> Locations -> Command Line Tools: Xcode 8.2.1 (8C1002)
 ```
-$ git clone
+$ git clone git@github.com:jeffdiers/NowPlaying.git
 $ cd NowPlaying
 $ npm install
 $ react-native run-ios 
 ```
-for a better expirence Build for release
+for a better expirence build for release
 ```
 $ react-native run-ios --configuration Release
 ```
@@ -40,12 +40,12 @@ Follow these guides to install Android SDK (this also takes awhile)
 https://facebook.github.io/react-native/releases/0.23/docs/android-setup.html <br />
 https://facebook.github.io/react-native/docs/getting-started.html
 ```
-$ git clone
+$ git clone git@github.com:jeffdiers/NowPlaying.git
 $ cd NowPlaying
 $ npm install
 $ react-native run-android
 ```
-for a better expirence Build for release
+for a better expirence build for release
 ```
 $ react-native run-android --variant=release
 ```

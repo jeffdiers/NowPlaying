@@ -30,14 +30,29 @@ export default class HomeScreen extends Component {
             </Text>
         </View>
         <Text style={styles.welcomeText}>
-            Welcome! This app displays movies that are currently playing. Tap 'View Movies' to get started.
+            Welcome. Pick a category to get started.
         </Text>
         <Text style={styles.welcomeText}>
             Thank you for viewing my app!
         </Text>
-        <TouchableOpacity onPress={() => navigate('List')} style={styles.welcomeButton}>  
+        <TouchableOpacity onPress={() => navigate('List', { category: 'now_playing', title: 'Now Playing' })} style={styles.welcomeButton}>  
           <Text style={styles.welcomeButtonText}>
-            View Movies
+            Now Playing
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate('List', { category: 'popular', title: 'Popular' })} style={styles.welcomeButton}>  
+          <Text style={styles.welcomeButtonText}>
+            Popular
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate('List', { category: 'upcoming', title: 'Upcoming' })} style={styles.welcomeButton}>  
+          <Text style={styles.welcomeButtonText}>
+            Upcoming
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate('List', { category: 'top_rated', title: 'Top Rated' })} style={styles.welcomeButton}>  
+          <Text style={styles.welcomeButtonText}>
+            Top Rated
           </Text>
         </TouchableOpacity>
       </View>

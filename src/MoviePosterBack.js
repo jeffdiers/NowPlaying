@@ -42,7 +42,7 @@ export default class MoviePosterBack extends Component {
             this.state.fadeAnim, // The value to drive
             {
               toValue: 1,        // Target
-              duration: 1600,    // Configuration
+              duration: 1500,    // Configuration
             },
           ).start();             // Don't forget start!
     }

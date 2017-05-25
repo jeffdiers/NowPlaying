@@ -4,6 +4,8 @@ const BrandColor = '#48BF84'
 const BrandColorDark = '#171D1C'
 const BrandColorLight = '#EFE9F4'
 
+const cardBorder = 6
+
 const horizontalMargin = 20;
 const slideWidth = Dimensions.get('window').width - 100;
 const sliderWidth = Dimensions.get('window').width;
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
     width: itemWidth,
     height: itemHeight,
     marginBottom: 9,
-    borderRadius: 4,
+    borderRadius: cardBorder,
   },
   infoCircle: {
     margin: 10,
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     height: itemHeight,
     marginBottom: 9,
     backgroundColor: BrandColorLight,
-    borderRadius: 4,
+    borderRadius: cardBorder,
   },
   flipSideContent: {
     width: itemWidth,
@@ -127,9 +129,9 @@ const styles = StyleSheet.create({
     backgroundColor: BrandColorLight
   },
   title: {
-    fontSize: 22,
+    fontSize: 18,
     textAlign: 'left',
-    marginTop: 10,
+    marginTop: 3,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -140,17 +142,20 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   overview: {
-    fontSize: 12,
+    color: BrandColorDark,
+    fontSize: 15,
     textAlign: 'left',
+    marginTop: 25,
     marginLeft: 10,
     marginRight: 10
   },
   backdrop: {
     width: itemWidth,
-    height: itemHeight * .30,
-    borderRadius: 4,
+    height: itemHeight * .35,
+    borderRadius: cardBorder,
   },
-  tagline: {
+  genres: {
+    color: BrandColorDark,
     fontStyle: 'italic',
     fontSize: 12,
     textAlign: 'left',
@@ -158,7 +163,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   moreInfoButton: {
-    marginBottom: 10
+    marginBottom: 10,
+    borderTopWidth: .5,
+    borderTopColor: 'grey',
+    paddingTop: 5
   },
   movieDetailBackdrop: {
     height: Dimensions.get('window').height,

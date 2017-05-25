@@ -6,7 +6,8 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
-  ScrollView
+  ScrollView,
+  Button
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { styles, sliderWidth, itemWidth, BrandColor } from '../styles/GlobalStyle'
@@ -21,7 +22,7 @@ import MoviePosterBack from './MoviePosterBack.js'
 const api_key = '8da455281906a386fa15ac3854f3e4fc'
 
 const api = new Frisbee({
-    baseURI: "https://api.themoviedb.org/3/movie",
+    baseURI: "https://api.themoviedb.org/3",
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -29,11 +30,11 @@ const api = new Frisbee({
 })
 
 export default class ListView extends Component {
-  static navigationOptions = {
-    title: 'Now Playing',
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.state.params.title,
     headerStyle:{ position: 'absolute', borderBottomColor: BrandColor, borderBottomWidth: .25, backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0 },
     headerTintColor: BrandColor
-  }
+  })
 
   constructor(props) {
       super(props) 
@@ -41,7 +42,8 @@ export default class ListView extends Component {
           loading: true,
           flipIndex: null,
           isFlipped: false,
-          movies: {}
+          movies: {},
+          genres: {}
       }
   }
 
@@ -51,26 +53,61 @@ export default class ListView extends Component {
 
   _loadMoviesNowPlaying = async () => {
     try {  
-        const res = await api.get('/now_playing?api_key=' + api_key + '&language=en-US&page=1',{
+        const res_movies = await api.get('/movie/' + this.props.navigation.state.params.category + '?api_key=' + api_key + '&language=en-US&page=1',{
             body: {}
         })
+        
 
-        if (res.err) throw res.err
+        if (res_movies.err) throw res_movies.err
 
         this.setState({
-            loading: false,
-            movies: res.body.results
+            movies: res_movies.body.results,
         })
     } catch (err) {
         this.setState({loading: false})
         console.log(err)
     }
+
+    try {
+        const res_genres = await api.get('/genre/movie/list?api_key=' + api_key + '&language=en-US',{
+            body: {}
+        })
+
+        if (res_genres.err) throw res_genres.err
+
+        this.setState({
+            loading: false,
+            genres: res_genres.body.genres
+        })
+    } catch (err) {
+        console.log(err)
+    }
   }
 
-  render() {
+  intersperse(arr, sep) {
+        if (arr.length === 0) {
+            return [];
+        }
 
+        return arr.slice(1).reduce(function(xs, x, i) {
+            return xs.concat([sep, x]);
+        }, [arr[0]]);
+    }
+
+
+
+  render() {
     const { navigate } = this.props.navigation
     const posters = this.state.loading ? <View /> : this.state.movies.map((movie, index) => {
+
+        let genres = []
+        // map genre ids to genre name and push into array
+        this.state.genres.map((genre, genre_index) => { 
+            movie.genre_ids.map((id, movie_genre_index) => { 
+                return genre.id === id ? genres.push(genre.name) : null 
+            }) 
+        })
+
         return (
             <View key={index} style={styles.container}>
                 <View>
@@ -86,14 +123,42 @@ export default class ListView extends Component {
                             onFlipped={(isFlipped)=>{
                                 console.log('isFlipped ', this.state.flipIndex, this.state.isFlipped)
                                 }}>
+
+                        {/*front side*/}
                         <Image 
                             style={ styles.poster }
                             source={{ uri: 'https://image.tmdb.org/t/p/w500/' + movie.poster_path + '' }}
                             />
 
-                        <MoviePosterBack  navigation={ this.props.navigation } movie={ movie } />
-                        
+                        {/*back side*/}
+                        <View style={ styles.flipSide }>
+                            <View style={styles.flipSideContent}>
+                                <View>
+                                    <Image 
+                                        style={ styles.backdrop }
+                                        source={{ uri: 'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path + '' }}
+                                        />
+                                    <View style={ styles.moviePosterBackCover }>
+                                        <Text style={ styles.title }>{ movie.title }</Text>
+                                        <Text style={styles.genres}>
+                                            { this.intersperse(genres, ', ') }
+                                        </Text>
+                                        <Text numberOfLines={9} style={ styles.overview }>
+                                            { movie.overview }
+                                        </Text>
+                                    </View>
+                                </View>
+                                <View style={styles.moreInfoButton}>
+                                    <Button
+                                        onPress={() => navigate('Detail', { movie_id: movie.id })}
+                                        title="More info"
+                                        />
+                                </View>
+                            </View>
+                        </View>
                         </FlipCard>
+
+                        {/*star rating under flipcard*/}
                         <View style={ styles.posterDetail }>
                             <View style={ styles.ratingContainer }>
                                 <StarRating
@@ -159,3 +224,11 @@ export default class ListView extends Component {
         )
     }
 }
+
+
+  
+        
+
+
+
+                                

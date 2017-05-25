@@ -17,7 +17,6 @@ import StarRating from 'react-native-star-rating'
 import TimeAgo from 'react-native-timeago'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import FlipCard from 'react-native-flip-card'
-import MoviePosterBack from './MoviePosterBack.js'
 
 const api_key = '8da455281906a386fa15ac3854f3e4fc'
 
